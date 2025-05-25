@@ -1,4 +1,6 @@
 import { Request, Response } from "express";
+import { Country, CountryInfo } from "../types/country";
+import transformCountry from "../converters/transofrm-country";
 
 const BASE_URL = "https://restcountries.com/v2";
 
@@ -15,9 +17,13 @@ export const getCountryByName = async (req: Request, res: Response) => {
 
     const response = await fetch(`${BASE_URL}/name/${name}`);
 
-    const data = await response.json();
+    const data: Country[] = await response.json();
 
-    res.send(data);
+    if (!data[0]) throw new Error("Country not found");
+    
+    const country: CountryInfo = transformCountry(data[0]);
+
+    res.send(country);
 };
 
 export const getCountryByCode = async (req: Request, res: Response) => {

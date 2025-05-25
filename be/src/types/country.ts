@@ -52,16 +52,7 @@ export type CountryInfo = {
     region: string;
     subregion: string;
     topLevelDomain: string[];
-    currencies: {
-        code: string;
-        name: string;
-        symbol: string;
-    }[];
-    languages: {
-        iso639_1: string;
-        iso639_2: string;
-        name: string;
-        nativeName: string;
-    }[];
+    currencies: string[];
+    languages: string[];
     borders: string[];
 }    

@@ -38,7 +38,7 @@ const detailsSlice = createSlice({
       })
       .addCase(loadCountryByName.fulfilled, (state, action) => {
         state.status = 'idle';
-        state.currentCountry = action.payload.data[0];
+        state.currentCountry = action.payload.data;
       })
       .addCase(loadNeighborsByBorder.fulfilled, (state, action) => {
         state.neighbors = action.payload.data.map((country) => country.name);

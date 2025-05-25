@@ -54,5 +54,5 @@ export type CountryInfo = {
     topLevelDomain: string[];
     currencies: string[];
     languages: string[];
-    borders: string[];
+    neighbors?: string[];
 }    

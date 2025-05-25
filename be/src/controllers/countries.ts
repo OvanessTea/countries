@@ -2,8 +2,8 @@ import { NextFunction, Request, Response } from "express";
 import { Country, CountryInfo } from "../types/country";
 import transformCountry from "../converters/transofrm-country";
 import { NotFoundError } from "../errors/not-found-error";
-
-const BASE_URL = "https://restcountries.com/v2";
+import { BASE_URL } from "../constants/urls";
+import getNeighbors from "../services/get-neighbors";
 
 export const getAllCountries = async (req: Request, res: Response) => {
     const response = await fetch(`${BASE_URL}/all?fields=name,capital,population,region,flags`);
@@ -22,17 +22,15 @@ export const getCountryByName = async (req: Request, res: Response, next: NextFu
 
     if (!data[0]) return next(new NotFoundError("Country not found"));
     
+    const codes = data[0].borders?.join(",") ?? "";
+    let neighbors = [] as string[];
+
+    if (codes) {
+        neighbors = await getNeighbors(codes);
+    }
+
     const country: CountryInfo = transformCountry(data[0]);
+    country.neighbors = neighbors;
 
     res.send(country);
-};
-
-export const getCountryByCode = async (req: Request, res: Response) => {
-    const { codes } = req.query;
-
-    const response = await fetch(`${BASE_URL}/alpha?codes=${codes}`);
-
-    const data = await response.json();
-
-    res.send(data);
 };

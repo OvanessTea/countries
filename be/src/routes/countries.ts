@@ -1,10 +1,9 @@
 import { Router } from "express";
-import { getAllCountries, getCountryByName, getCountryByCode } from "../controllers/countries";
+import { getAllCountries, getCountryByName } from "../controllers/countries";
 
 const router = Router();
 
 router.get("/", getAllCountries);
 router.get("/name/:name", getCountryByName);
-router.get("/alpha", getCountryByCode);
 
 export default router;

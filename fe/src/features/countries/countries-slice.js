@@ -25,7 +25,7 @@ const countrySlice = createSlice({
       })
       .addCase(loadCountries.rejected, (state, action) => {
         state.status = 'rejected';
-        state.error = action.payload || action.meta.error;
+        state.error = action.payload || action.error.message;
       })
       .addCase(loadCountries.fulfilled, (state, action) => {
         state.status = 'received';

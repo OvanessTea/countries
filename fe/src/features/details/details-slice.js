@@ -34,7 +34,7 @@ const detailsSlice = createSlice({
       })
       .addCase(loadCountryByName.rejected, (state, action) => {
         state.status = 'rejected';
-        state.error = action.payload || action.meta.error;
+        state.error = action.payload || action.error.message;
       })
       .addCase(loadCountryByName.fulfilled, (state, action) => {
         state.status = 'idle';

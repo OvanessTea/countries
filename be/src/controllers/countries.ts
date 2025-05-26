@@ -4,13 +4,16 @@ import transformCountry from "../converters/transofrm-country";
 import { NotFoundError } from "../errors/not-found-error";
 import { BASE_URL } from "../constants/urls";
 import getNeighbors from "../services/get-neighbors";
+import transformAllCountries from "../converters/transform-all-countries";
 
 export const getAllCountries = async (req: Request, res: Response) => {
     const response = await fetch(`${BASE_URL}/all?fields=name,capital,population,region,flags`);
 
     const data = await response.json();
 
-    res.send(data);
+    const transformedData = transformAllCountries(data);
+
+    res.send(transformedData);
 };
 
 export const getCountryByName = async (req: Request, res: Response, next: NextFunction) => {

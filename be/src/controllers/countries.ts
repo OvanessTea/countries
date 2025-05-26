@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { Country, CountryInfo } from "../types/country";
+import { Country, CountryInfo, CountryV3 } from "../types/country";
 import transformCountry from "../converters/transofrm-country";
 import { NotFoundError } from "../errors/not-found-error";
 import { BASE_URL } from "../constants/urls";
@@ -21,7 +21,7 @@ export const getCountryByName = async (req: Request, res: Response, next: NextFu
 
     const response = await fetch(`${BASE_URL}/name/${name}`);
 
-    const data: Country[] = await response.json();
+    const data: CountryV3[] = await response.json();
 
     if (!data[0]) return next(new NotFoundError("Country not found"));
     

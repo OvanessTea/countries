@@ -145,7 +145,7 @@ export type CountryInfo = {
     neighbors?: string[];
 }    
 
-export type CountryInfoV3 = {
+export type CountryDetailsV3 = {
     name: string,
     capital: string,
     population: number,
@@ -153,5 +153,6 @@ export type CountryInfoV3 = {
     flags: {
         svg: string,
         png: string
-    }
+    },
+    neighbors?: string[];
 }

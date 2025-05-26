@@ -1,19 +1,20 @@
-import { Country, CountryInfoV3, CountryV3 } from "../types/country";
+import { Country, CountryDetailsV3, CountryInfo, CountryV3 } from "../types/country";
 
-const mapCountry = (country: CountryV3): CountryInfoV3 => {
+const mapCountry = (country: CountryV3): CountryDetailsV3 => {
     return {
         name: country.name.common,
-        capital: country.capital[0],
-        population: country.population,
-        region: country.region,
         flags: {
             svg: country.flags.svg,
             png: country.flags.png
-        }
+        },
+        capital: country.capital[0] || "",
+        population: country.population,
+        region: country.region,
+
     }
 }
 
-const compareCountryNames = (a: CountryInfoV3, b: CountryInfoV3): number => {
+const compareCountryNames = (a: CountryDetailsV3, b: CountryDetailsV3): number => {
     return a.name.localeCompare(b.name);
 }
 

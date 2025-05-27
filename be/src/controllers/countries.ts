@@ -5,6 +5,7 @@ import { NotFoundError } from "../errors/not-found-error";
 import { BASE_URL } from "../constants/urls";
 import getNeighbors from "../services/get-neighbors";
 import transformAllCountries from "../converters/transform-all-countries";
+import { cacheResponse } from "../redis/redis-utils";
 
 export const getAllCountries = async (req: Request, res: Response) => {
     const response = await fetch(`${BASE_URL}/all?fields=name,capital,population,region,flags`);
@@ -12,6 +13,8 @@ export const getAllCountries = async (req: Request, res: Response) => {
     const data = await response.json();
 
     const transformedData = transformAllCountries(data);
+
+    await cacheResponse(res, transformedData);
 
     res.send(transformedData);
 };
@@ -34,6 +37,8 @@ export const getCountryByName = async (req: Request, res: Response, next: NextFu
 
     const country: CountryInfo = transformCountry(data[0]);
     country.neighbors = neighbors;
+
+    await cacheResponse(res, country);
 
     res.send(country);
 };
